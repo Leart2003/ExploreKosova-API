@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInstance";
+
 
 export async function getAllPlaces() {
   const response = await axiosInstance.get("/places");
