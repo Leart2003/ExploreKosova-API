@@ -15,7 +15,7 @@ function HomePage() {
 
   const geo = useGeolocation();
 
-  // Përdor lokacionin e user-it nëse ekziston, përndryshe fallback te Prishtina
+
   const latitude = geo.location ? geo.location.latitude : PRISHTINA_LAT;
   const longitude = geo.location ? geo.location.longitude : PRISHTINA_LNG;
 
