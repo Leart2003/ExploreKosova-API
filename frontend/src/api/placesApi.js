@@ -21,3 +21,17 @@ export async function getNearbyPlaces(latitude, longitude, radiusKm, categoryId)
   });
   return response.data;
 }
+
+export async function createPlace(placeData) {
+    const response = await axiosInstance.post("/places", placeData);
+    return response.data;
+}
+
+export async function updatePlace(id, placeData) {
+    const response = await axiosInstance.put("/places/" + id, placeData);
+    return response.data;
+}
+
+export async function deletePlace(id) {
+    await axiosInstance.delete("/places/" + id);
+}
