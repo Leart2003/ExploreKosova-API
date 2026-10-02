@@ -90,6 +90,7 @@ namespace SmartCity_API
 
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowReact");   
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
