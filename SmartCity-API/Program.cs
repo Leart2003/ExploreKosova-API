@@ -36,6 +36,7 @@ namespace SmartCity_API
             builder.Services.AddScoped<IPlaceImageRepository, PlaceImageRepository>();
             builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
             builder.Services.AddScoped<IFavoriteRepository, FavoriteRepository>();
+            builder.Services.AddSwaggerGen();
 
             // Mappers
             builder.Services.AddAutoMapper(cfg =>
@@ -74,22 +75,16 @@ namespace SmartCity_API
                           .AllowAnyMethod();
                 });
             });
-
             var app = builder.Build();
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-            }
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-
             app.UseHttpsRedirection();
-            app.UseCors("AllowReact");   
+            app.UseCors("AllowReact");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
