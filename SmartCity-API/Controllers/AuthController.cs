@@ -141,7 +141,7 @@ namespace SmartCity_API.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
+        [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
