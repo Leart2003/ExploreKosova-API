@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../../utils/leafletIconFix";
 
 
-function PlaceMap({ places, center, centerLng }) {
+function PlaceMap({ places, centerLat, centerLng }) {
 
   return (
     <MapContainer center={[centerLat, centerLng]}
@@ -27,7 +27,7 @@ function PlaceMap({ places, center, centerLng }) {
             </Popup>
           </Marker>
         );
-      })}
+      })} 
         </MapContainer>
         
   )
