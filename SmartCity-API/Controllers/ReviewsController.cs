@@ -47,9 +47,9 @@ namespace SmartCity_API.Controllers
         /// <response code="200">Review created successfully.</response>
         /// <response code="400">Rating is outside the valid 1-5 range.</response>
         /// <response code="401">User is not authenticated.</response>
-   
 
 
+        [HttpPost]
         [Authorize]
         public async Task<ActionResult<ReviewDto>> Create([FromBody] CreateReviewDto createDto)
         {
@@ -76,9 +76,8 @@ namespace SmartCity_API.Controllers
         /// <response code="204">Review deleted successfully.</response>
         /// <response code="404">Review with the given id was not found.</response>
         /// <response code="403">The current user is neither the author nor an Admin.</response>
-        [HttpPost]
-        [HttpDelete("{id}")]
 
+        [HttpDelete("{id}")]
         [Authorize]
 
         public async Task<IActionResult> Delete(int id)
