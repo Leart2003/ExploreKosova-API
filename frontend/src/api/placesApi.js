@@ -11,14 +11,29 @@ export async function getPlaceById(id) {
 }
 
 export async function getNearbyPlaces(latitude, longitude, radiusKm, categoryId) {
+
+  console.log("=== GET NEARBY PLACES ===");
+  console.log("latitude:", latitude);
+  console.log("longitude:", longitude);
+  console.log("radiusKm:", radiusKm);
+  console.log("categoryId:", categoryId);
+
+  const params = {
+    latitude,
+    longitude,
+    radiusKm,
+  };
+
+  if (categoryId) {
+    params.categoryId = categoryId;
+  }
+
+  console.log("Request params:", params);
+
   const response = await axiosInstance.get("/places/nearby", {
-    params: {
-      latitude: latitude,
-      longitude: longitude,
-      radiusKm: radiusKm,
-      categoryId: categoryId,
-    },
+    params,
   });
+
   return response.data;
 }
 

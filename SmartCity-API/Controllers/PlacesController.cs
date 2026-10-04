@@ -68,6 +68,33 @@ namespace SmartCity_API.Controllers
             return Ok(dtos);
 
         }
+
+        [HttpGet("nearby")]
+        public async Task<ActionResult<IEnumerable<PlaceDto>>> GetNearby(
+            [FromQuery] double latitude,
+            [FromQuery] double longitude,
+            [FromQuery] double radiusKm = 50,
+            [FromQuery] int? categoryId = null)
+        {
+            if (radiusKm <= 0)
+            {
+                return BadRequest("radiusKm must be greater than 0.");
+            }
+
+            var places = await _placeRepository.GetNearbyAsync(latitude, longitude, radiusKm, categoryId);
+            var dtos = new List<PlaceDto>();
+
+            foreach (var place in places)
+            {
+                var dto = _mapper.Map<PlaceDto>(place);
+                dto.AverageRating = Math.Round(await _reviewRepository.GetAverageRatingAsync(place.Id), 1);
+                dto.DistanceKm = Math.Round(CalculateDistanceForDisplay(latitude, longitude, place.Latitude, place.Longitude), 1);
+                dtos.Add(dto);
+            }
+
+            return Ok(dtos);
+        }
+
         [HttpGet("{id}")]
 
         /// <summary>
