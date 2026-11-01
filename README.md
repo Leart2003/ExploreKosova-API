@@ -1,121 +1,72 @@
 # Explore Kosova API
 
-A full-stack web application for discovering places in Kosovo, built with ASP.NET Core for the backend and React for the frontend. The platform allows users to browse locations, filter by category, view place details, save favorites, leave reviews, and authenticate using JWT-based security.
+This project is a simple full-stack app for finding places in Kosovo. I made it with a C# ASP.NET Core API on the backend and a React app on the frontend.
 
-## Overview
+The app lets users:
+- see places on a map
+- filter places by category
+- view details of a place
+- login/register
+- save favorite places
+- leave reviews
+- manage places and categories if they are admin
 
-Explore Kosova helps users discover points of interest across Kosovo using a map-based experience. It includes:
+## What I used
 
-- Place discovery near a user’s location or a default city center
-- Category-based filtering
-- Place detail pages with ratings and reviews
-- User authentication and authorization
-- Favorite management
-- Admin-only management for categories and places
-- Integration with a SQL Server database and a React frontend
-
-## Tech Stack
-
-Backend
-- ASP.NET Core 10
+Backend:
+- ASP.NET Core
 - Entity Framework Core
-- ASP.NET Core Identity
-- JWT Authentication
 - SQL Server
-- Swagger / OpenAPI
+- Identity
+- JWT for login
+- Swagger
 
-Frontend
-- React 19
+Frontend:
+- React
 - React Router
 - Axios
 - Bootstrap
-- Leaflet / React Leaflet
+- Leaflet
 
-## Architecture
-
-This repository is organized as a modular solution:
-
-- `SmartCity-API/` — ASP.NET Core Web API
-- `Domain/` — entities, DTOs, interfaces, and mapping profiles
-- `Infrastructure/` — DbContext, repositories, database migrations
-- `Application/` — application-layer project
-- `frontend/` — React web client
-- `SmartCityTest/` — test project
-
-## Main Features
-
-### Public API
-- List all places
-- Find nearby places by latitude/longitude/radius
-- Get place by ID
-- Get all categories
-- Filter places by category
-
-### Authentication
-- Register new users
-- Login with email and password
-- JWT token generation
-- Role-based access using Admin and Tourist roles
-- Change password endpoint for authenticated users
-
-### Place and Review Management
-- Add, update, and delete categories (Admin only)
-- Add, update, and delete places (Admin only)
-- Add reviews and compute average ratings
-- Favorite places for logged-in users
-- Place images support via repository and DTO structures
-
-## Repository Structure
+## Project structure
 
 ```text
 ExploreKosova-API/
 ├── SmartCity-API/
 │   ├── Controllers/
-│   ├── Properties/
 │   ├── Program.cs
 │   ├── appsettings.json
-│   ├── appsettings.Development.json
-│   ├── SmartCity-API.csproj
-│   └── SmartCity-API.http
+│   └── SmartCity-API.csproj
 ├── Domain/
-│   ├── Dtos/
 │   ├── Entities/
+│   ├── Dtos/
 │   ├── Interface/
-│   ├── Mappers/
-│   └── *.csproj
+│   └── Mappers/
 ├── Infrastructure/
 │   ├── DB/
-│   ├── Migrations/
 │   ├── Repository/
-│   └── *.csproj
+│   └── Migrations/
 ├── Application/
-│   └── *.csproj
 ├── SmartCityTest/
-│   └── UnitTest1.cs
 ├── frontend/
 │   ├── src/
 │   ├── public/
-│   ├── package.json
-│   └── README.md
+│   └── package.json
 ├── SmartCity-API.slnx
-├── package-lock.json
-├── .gitignore
-└── README.md
+├── README.md
+└── .gitignore
 ```
 
-## Prerequisites
+## Main idea
 
-Before running the project, make sure you have:
+The app is basically a tourist app for Kosovo. Users can search for places nearby, look at information about them, and see them on a map. The backend handles the database and API requests, and the frontend shows everything to the user.
 
-- .NET SDK 10.0 or later
-- SQL Server instance
-- Node.js 18+ and npm
-- A browser to run the frontend
+## How to run the backend
 
-## Backend Setup
+1. Open the project in Visual Studio or VS Code.
+2. Change the connection string in `SmartCity-API/appsettings.json` to your own SQL Server.
 
-1. Open the solution project in the repository.
-2. Update the connection string in `SmartCity-API/appsettings.json` to match your local SQL Server setup:
+Example:
 
 ```json
 "ConnectionStrings": {
@@ -123,27 +74,21 @@ Before running the project, make sure you have:
 }
 ```
 
-3. Restore dependencies:
+3. Run this command:
 
 ```bash
 dotnet restore
 ```
 
-4. Run the API:
+4. Then start the API:
 
 ```bash
 dotnet run --project SmartCity-API/SmartCity-API.csproj
 ```
 
-5. Swagger is enabled in development and can be accessed at:
+5. Swagger should open in the browser if you run it in development mode.
 
-```text
-https://localhost:5001/swagger
-```
-
-The API uses JWT authentication, and the signing configuration is defined in `appsettings.json` under the `Jwt` section.
-
-## Frontend Setup
+## How to run the frontend
 
 1. Go to the frontend folder:
 
@@ -151,7 +96,7 @@ The API uses JWT authentication, and the signing configuration is defined in `ap
 cd frontend
 ```
 
-2. Install dependencies:
+2. Install the packages:
 
 ```bash
 npm install
@@ -163,97 +108,57 @@ npm install
 npm start
 ```
 
-The frontend will typically run on:
+It usually opens on:
 
 ```text
 http://localhost:3000
 ```
 
-## Environment Notes
+## Some endpoints
 
-The frontend includes environment configuration in `frontend/.env` and uses API calls through the Axios instance defined in the app.
+Here are the main API routes:
 
-If your backend runs on a different port or host, update the API base URL accordingly.
-
-## Authentication
-
-The API exposes the following auth endpoints:
-
+### Auth
 - `POST /api/Auth/register`
 - `POST /api/Auth/login`
 - `POST /api/Auth/change-password`
 
-Authenticated requests use JWT bearer tokens. Tokens include claims such as:
-
-- user ID
-- email
-- full name
-- role
-
-## Core API Endpoints
-
 ### Categories
 - `GET /api/Category`
-- `GET /api/Category/{id}`
-- `POST /api/Category` (Admin only)
-- `PUT /api/Category/{id}` (Admin only)
-- `DELETE /api/Category/{id}` (Admin only)
+- `POST /api/Category` (admin only)
+- `PUT /api/Category/{id}` (admin only)
+- `DELETE /api/Category/{id}` (admin only)
 
 ### Places
 - `GET /api/Places`
-- `GET /api/Places/nearby?latitude={lat}&longitude={lng}&radiusKm={radius}&categoryId={id}`
+- `GET /api/Places/nearby`
 - `GET /api/Places/{id}`
-- `PUT /api/Places/{id}` (Admin only)
-- `DELETE /api/Places/{id}` (Admin only)
+- `PUT /api/Places/{id}` (admin only)
+- `DELETE /api/Places/{id}` (admin only)
 
-### Reviews
+### Reviews and favorites
 - `GET /api/Reviews`
 - `POST /api/Reviews`
-- `PUT /api/Reviews/{id}`
-- `DELETE /api/Reviews/{id}`
-
-### Favorites
 - `GET /api/Favorite`
 - `POST /api/Favorite`
-- `DELETE /api/Favorite/{id}`
-
-## Data Model Highlights
-
-The API models Kosovo travel destinations with properties such as:
-
-- name
-- description
-- address
-- city
-- latitude
-- longitude
-- category
-- images
-- reviews
-- favorite records
 
 ## Notes
 
-This project is currently a local development application and is structured around a map-based discovery experience for places in Kosovo. The backend and frontend are separated, allowing the API to be consumed by a web client or future mobile client.
+This project is still a student/project-style app, so it is not perfect. Some things can be improved later like better validation, cleaner code, better admin pages, and deployment setup.
 
-## Future Improvements
+I used JWT for login and ASP.NET Identity for users. The frontend talks to the backend using Axios.
 
-Potential enhancements include:
+## Future improvements
 
-- image upload support for place photos
-- more advanced admin dashboards
-- search and pagination
-- multilingual support
-- production deployment configuration
-- CI/CD pipeline
-- testing improvements and expanded unit/integration coverage
+Maybe later I can add:
+- better image upload
+- search by name
+- pagination
+- more admin features
+- better design
+- production deployment
 
-## Contributing
+## Final comment
 
-Contributions are welcome. If you want to improve the project:
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Open a pull request
+This project was a good learning project for me because I got to work with both backend and frontend, database design, auth, and map features together.
 
